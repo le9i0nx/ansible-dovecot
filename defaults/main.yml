@@ -237,7 +237,17 @@ dovecot_lda_config_map: {}
 #
 # List of LMTP ``inet_listeners`` or ``unix_listeners`` which will be enabled.
 # See :ref:`dovecot_lmtp_listeners` for more details.
-dovecot_lmtp_listeners: [ '/var/spool/postfix/private/dovecot-lmtp' ]
+dovecot_lmtp_listeners: [ 'auth-client' ]
+
+
+# .. envvar:: dovecot_lmtp_user
+#
+dovecot_lmtp_user: 'exim'
+
+
+# .. envvar:: dovecot_lmtp_group
+#
+dovecot_lmtp_group: 'root'
 
 
 # .. envvar:: dovecot_lmtp_config_map
@@ -247,9 +257,9 @@ dovecot_lmtp_listeners: [ '/var/spool/postfix/private/dovecot-lmtp' ]
 dovecot_lmtp_config_map:
   service:
     unix_listener:
-      /var/spool/postfix/private/dovecot-lmtp:
-        user: 'postfix'
-        group: 'postfix'
+      auth-client:
+        user: '{{dovecot_lmtp_user}}'
+        group: '{{dovecot_lmtp_group}}'
         mode: 0600
 
 
